@@ -20,6 +20,12 @@ open import UF.FunExt
 open import UF.Subsingletons
 open import UF.Subsingletons-Properties
 
+private
+ transport-lemma : {x : X} {y : Y x} (i : is-prop X)
+                 → transport Y (i x x) y ＝ y
+ transport-lemma {x} {y} i = ap (λ - → transport Y - y)
+                                (identifications-in-props-are-refl i x)
+
 module _ (a : X) where
 
  Π-proj : Π Y → Y a
@@ -33,31 +39,25 @@ module _ (a : X) where
                  → is-equiv Π-proj
  Π-proj-is-equiv fe i = qinvs-are-equivs Π-proj (Π-proj⁻¹ i , η , ε)
   where
+   η : Π-proj⁻¹ i ∘ Π-proj ∼ id
+   η f = dfunext fe I
+    where
+     I : Π-proj⁻¹ i (Π-proj f) ∼ f
+     I x =
+      Π-proj⁻¹ i (Π-proj f) x   ＝⟨ refl ⟩
+      transport Y (i a x) (f a) ＝⟨ II (i x a) ⟩
+      f x                       ∎
+       where
+        II : x ＝ a → transport Y (i a x) (f a) ＝ f x
+        II refl =
+         transport Y (i a a) (f a) ＝⟨ transport-lemma i ⟩
+         f a                       ∎
+
    ε : Π-proj ∘ Π-proj⁻¹ i ∼ id
    ε y =
     (Π-proj ∘ Π-proj⁻¹ i) y ＝⟨ refl ⟩
-    transport Y (i a a) y   ＝⟨ I ⟩
-    transport Y refl y      ＝⟨ refl ⟩
-    y ∎
-     where
-      I = ap (λ - → transport Y - y) (identifications-in-props-are-refl i a)
-
-   II : (f : Π Y) {x : X} → x ＝ a → transport Y (i a x) (f a) ＝ f x
-   II f refl =
-    transport Y (i a a) (f a) ＝⟨ II₀ ⟩
-    transport Y refl (f a)    ＝⟨ refl ⟩
-    f a ∎
-     where
-      II₀ = ap (λ - → transport Y - (f a)) (identifications-in-props-are-refl i a)
-
-   III : (f : Π Y) → Π-proj⁻¹ i (Π-proj f) ∼ f
-   III f x =
-    Π-proj⁻¹ i (Π-proj f) x   ＝⟨ refl ⟩
-    transport Y (i a x) (f a) ＝⟨ II f (i x a) ⟩
-    f x                       ∎
-
-   η : Π-proj⁻¹ i ∘ Π-proj ∼ id
-   η φ = dfunext fe (III φ)
+    transport Y (i a a) y   ＝⟨ transport-lemma i ⟩
+    y                       ∎
 
  prop-indexed-product : funext 𝓤 𝓥
                       → is-prop X
@@ -67,22 +67,19 @@ module _ (a : X) where
 empty-indexed-product-is-𝟙 : funext 𝓤 𝓥
                            → (X → 𝟘 {𝓦})
                            → Π Y ≃ 𝟙 {𝓣}
-empty-indexed-product-is-𝟙 {𝓦} {𝓣} fe v = γ
+empty-indexed-product-is-𝟙 {𝓦} {𝓣} fe v = qinveq unique-to-𝟙 (g , η , ε)
  where
   g : 𝟙 → Π Y
   g ⋆ x = unique-from-𝟘 {𝓥} {𝓦} (v x)
 
-  η : (u : 𝟙) → ⋆ ＝ u
-  η ⋆ = refl
-
-  ε : (φ : Π Y) → g ⋆ ＝ φ
-  ε φ = dfunext fe u
+  η : (f : Π Y) → g ⋆ ＝ f
+  η f = dfunext fe I
    where
-    u : (x : X) → g (unique-to-𝟙 φ) x ＝ φ x
-    u x = unique-from-𝟘 (v x)
+    I : (x : X) → g (unique-to-𝟙 f) x ＝ f x
+    I x = unique-from-𝟘 (v x)
 
-  γ : Π Y ≃ 𝟙 {𝓣}
-  γ = qinveq unique-to-𝟙 (g , ε , η)
+  ε : (u : 𝟙) → ⋆ ＝ u
+  ε ⋆ = refl
 
 \end{code}
 
@@ -104,30 +101,26 @@ module _ (a : X) where
    η : (y : Y a) → Σ-in⁻¹ i (Σ-in y) ＝ y
    η y =
     Σ-in⁻¹ i (Σ-in y)     ＝⟨ refl ⟩
-    transport Y (i a a) y ＝⟨ I ⟩
-    transport Y refl y    ＝⟨ refl ⟩
+    transport Y (i a a) y ＝⟨ transport-lemma i ⟩
     y                     ∎
-     where
-      I = ap (λ - → transport Y - y) (identifications-in-props-are-refl i a)
-
-   II : (x : X) (y : Y x) → x ＝ a
-      → transport Y (i a x) (transport Y (i x a) y) ＝ y
-   II a y refl =
-    transport Y (i a a) (transport Y (i a a) y) ＝⟨ η (transport Y (i a a) y) ⟩
-    transport Y (i a a) y                       ＝⟨ η y ⟩
-    y                                           ∎
 
    ε : (σ : Σ Y) → Σ-in (Σ-in⁻¹ i σ) ＝ σ
    ε (x , y) =
     Σ-in (Σ-in⁻¹ i (x , y))     ＝⟨ refl ⟩
-    (a , transport Y (i x a) y) ＝⟨ to-Σ-＝ (i a x , II x y (i x a)) ⟩
+    (a , transport Y (i x a) y) ＝⟨ to-Σ-＝ (i a x , I (i x a)) ⟩
     (x , y)                     ∎
+     where
+      I : x ＝ a → transport Y (i a x) (transport Y (i x a) y) ＝ y
+      I refl =
+       transport Y (i a a) (transport Y (i a a) y) ＝⟨ transport-lemma i ⟩
+       transport Y (i a a) y                       ＝⟨ transport-lemma i ⟩
+       y                                           ∎
 
  prop-indexed-sum : is-prop X → Σ Y ≃ Y a
  prop-indexed-sum i = ≃-sym (Σ-in , Σ-in-is-equiv i)
 
 empty-indexed-sum-is-𝟘 : (X → 𝟘 {𝓦}) → Σ Y ≃ (𝟘 {𝓣})
-empty-indexed-sum-is-𝟘 {𝓦} {𝓣} φ = qinveq f (g , ε , η)
+empty-indexed-sum-is-𝟘 {𝓦} {𝓣} φ = qinveq f (g , η , ε)
  where
   f : Σ Y → 𝟘
   f (x , y) = 𝟘-elim (φ x)
@@ -135,10 +128,10 @@ empty-indexed-sum-is-𝟘 {𝓦} {𝓣} φ = qinveq f (g , ε , η)
   g : 𝟘 → Σ Y
   g = unique-from-𝟘
 
-  η : (x : 𝟘) → f (g x) ＝ x
-  η = 𝟘-induction
+  ε : (x : 𝟘) → f (g x) ＝ x
+  ε = 𝟘-induction
 
-  ε : (σ : Σ Y) → g (f σ) ＝ σ
-  ε (x , y) = 𝟘-elim (φ x)
+  η : (σ : Σ Y) → g (f σ) ＝ σ
+  η (x , y) = 𝟘-elim (φ x)
 
 \end{code}
