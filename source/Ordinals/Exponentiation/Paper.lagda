@@ -554,11 +554,11 @@ Lemma-38 =   order-preserving-gives-≼-implies-EM ∘ H₁
   H₂ = λ h α β  f   f-order-pres  → ≼-gives-⊴ α β (h α β (f , f-order-pres))
 
 Proposition-39-i : ((α β : Ordinal 𝓤) → 𝟙ₒ ⊲ α → β ⊴ α ^ₒ β) ↔ EM 𝓤
-Proposition-39-i =   ^ₒ-as-large-as-exponent-implies-EM
+Proposition-39-i =   (λ hyp → ^ₒ-as-large-as-exponent-implies-EM (λ α β h _ _ → hyp α β h))
                    , EM-implies-^ₒ-as-large-as-exponent
 
 Proposition-39-ii : ((β : Ordinal 𝓤) → β ⊴ 𝟚ₒ ^ₒ β) ↔ EM 𝓤
-Proposition-39-ii =   𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
+Proposition-39-ii =   (λ hyp → 𝟚ₒ^ₒ-as-large-as-exponent-implies-EM λ β _ → hyp β)
                     , (λ em β → rl-implication Proposition-39-i em 𝟚ₒ β (successor-increasing 𝟙ₒ))
 
 \end{code}

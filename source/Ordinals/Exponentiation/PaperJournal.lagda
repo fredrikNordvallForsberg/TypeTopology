@@ -745,22 +745,28 @@ Lemma-54 =   order-preserving-gives-≼-implies-EM ∘ H₁
   H₁ = λ h α β (f , f-order-pres) → ⊴-gives-≼ α β (h α β  f   f-order-pres)
   H₂ = λ h α β  f   f-order-pres  → ≼-gives-⊴ α β (h α β (f , f-order-pres))
 
+-- TODO: Add has-trichotomous-least-element α, β?
 Proposition-55-i : ((α β : Ordinal 𝓤) → β ⊴ α +ₒ β) ↔ EM 𝓤
 Proposition-55-i =   +ₒ-as-large-as-right-summand-implies-EM
                    , EM-implies-+ₒ-as-large-as-right-summand
 
+-- TODO: Add has-trichotomous-least-element α, β?
 Proposition-55-ii : ((α β : Ordinal 𝓤) → 𝟘ₒ ⊲ α → β ⊴ α ×ₒ β) ↔ EM 𝓤
 Proposition-55-ii =  ×ₒ-as-large-as-right-factor-implies-EM
                    , EM-implies-×ₒ-as-large-as-right-factor
 
-Proposition-55-iii : ((β : Ordinal 𝓤) → β ⊴ 𝟚ₒ ^ₒ β) ↔ EM 𝓤
+Proposition-55-iii
+ : ((β : Ordinal 𝓤) → has-trichotomous-least-element β → β ⊴ 𝟚ₒ ^ₒ β) ↔ EM 𝓤
 Proposition-55-iii =   𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
-                     , (λ em β → EM-implies-^ₒ-as-large-as-exponent
-                                  em 𝟚ₒ β (successor-increasing 𝟙ₒ))
+                     , (λ em β _ → EM-implies-^ₒ-as-large-as-exponent
+                                    em 𝟚ₒ β (successor-increasing 𝟙ₒ))
 
-Proposition-55-iv : ((α β : Ordinal 𝓤) → 𝟙ₒ ⊲ α → β ⊴ α ^ₒ β) ↔ EM 𝓤
+Proposition-55-iv
+ : ((α β : Ordinal 𝓤) → 𝟙ₒ ⊲ α
+                      → has-trichotomous-least-element α
+                      → has-trichotomous-least-element β → β ⊴ α ^ₒ β) ↔ EM 𝓤
 Proposition-55-iv =   ^ₒ-as-large-as-exponent-implies-EM
-                    , EM-implies-^ₒ-as-large-as-exponent
+                    , (λ em α β h _ _ → EM-implies-^ₒ-as-large-as-exponent em α β h)
 
 \end{code}
 
