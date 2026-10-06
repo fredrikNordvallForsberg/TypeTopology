@@ -1219,23 +1219,31 @@ no-greatest-ordinal {𝓤} (α , α-greatest) = irrefl (OO 𝓤) α IV
 Added 15 July 2025 by Tom de Jong after discussions with Nicolai Kraus, Fredrik
 Nordvall Forsberg and Chuangjie Xu a year earlier.
 
-Refactored to use counterexamples with trichotomous least elements
+Refactored to use ordinals with a trichotomous least element
 (i.e., of the form `𝟙ₒ +ₒ γ`) by Fredrik Nordvall Forsberg 5 October 2026.
+
+We place the main construction in a separate module for future reference.
 
 \begin{code}
 
-+ₒ-as-large-as-right-summand-implies-EM : ((α β : Ordinal 𝓤) → β ⊴ α +ₒ β)
-                                        → EM 𝓤
-+ₒ-as-large-as-right-summand-implies-EM hyp P P-is-prop = IV
- where
-  Pₒ = prop-ordinal P P-is-prop
+module +ₒ-inflationary-counterexample
+        (P : 𝓤 ̇ )
+        (P-is-prop : is-prop P)
+       where
 
-  α = 𝟙ₒ +ₒ Pₒ
-  β = 𝟙ₒ +ₒ 𝟙ₒ
+ Pₒ = prop-ordinal P P-is-prop
+
+ α β : Ordinal 𝓤
+ α = 𝟙ₒ +ₒ Pₒ
+ β = 𝟙ₒ +ₒ 𝟙ₒ
+
+ module _
+         (+ₒ-inflationary : β ⊴ α +ₒ β)
+        where
 
   𝕗 : 𝟙ₒ ⊴ Pₒ +ₒ β
   𝕗 = +ₒ-left-reflects-⊴ 𝟙ₒ 𝟙ₒ (Pₒ +ₒ β)
-                         (transport (𝟙ₒ +ₒ 𝟙ₒ ⊴_) (+ₒ-assoc 𝟙ₒ Pₒ β) (hyp α β))
+       (transport (𝟙ₒ +ₒ 𝟙ₒ ⊴_) (+ₒ-assoc 𝟙ₒ Pₒ β) +ₒ-inflationary)
   f = [ 𝟙ₒ , Pₒ +ₒ β ]⟨ 𝕗 ⟩
 
   I : (p : P) → f ⋆ ＝ inl p → P
@@ -1254,8 +1262,15 @@ Refactored to use counterexamples with trichotomous least elements
       m (inr b ) = 𝟘-elim
   III : (b : ⟨ β ⟩) → f ⋆ ＝ inr b → ¬ P
   III b e p = +disjoint ((II p) ⁻¹ ∙ e)
-  IV : P + ¬ P
-  IV = equality-cases (f ⋆) (λ p → inl ∘ I p) (λ b → inr ∘ III b)
+
+  decidability : P + ¬ P
+  decidability = equality-cases (f ⋆) (λ p → inl ∘ I p) (λ b → inr ∘ III b)
+
++ₒ-as-large-as-right-summand-implies-EM : ((α β : Ordinal 𝓤) → β ⊴ α +ₒ β)
+                                        → EM 𝓤
++ₒ-as-large-as-right-summand-implies-EM hyp P P-is-prop = decidability (hyp α β)
+ where
+  open +ₒ-inflationary-counterexample P P-is-prop
 
 EM-implies-+ₒ-as-large-as-right-summand : EM 𝓤
                                         → ((α β : Ordinal 𝓤) → β ⊴ α +ₒ β)

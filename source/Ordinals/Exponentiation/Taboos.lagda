@@ -640,10 +640,10 @@ Refactored to use a counterexample with a trichotomous least element
 
 \begin{code}
 
-𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
+𝟚ₒ^ₒ-as-large-as-exponent-implies-EM'
  : ((β : Ordinal 𝓤) → has-trichotomous-least-element β → β ⊴ 𝟚ₒ {𝓤} ^ₒ β)
  → EM 𝓤
-𝟚ₒ^ₒ-as-large-as-exponent-implies-EM hyp P P-is-prop = X (f (inr ⋆)) refl
+𝟚ₒ^ₒ-as-large-as-exponent-implies-EM' hyp P P-is-prop = X (f (inr ⋆)) refl
  where
   Pₒ = prop-ordinal P P-is-prop
   β = 𝟙ₒ +ₒ Pₒ +ₒ 𝟙ₒ
@@ -755,15 +755,28 @@ Refactored to use a counterexample with a trichotomous least element
     VII (inl (inr p) , l , q) = p
     VII (inr ⋆ , l , q) = 𝟘-elim (irrefl β (inr ⋆) l)
 
-^ₒ-as-large-as-exponent-implies-EM
+𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
+ : ((β : Ordinal 𝓤) → β ⊴ 𝟚ₒ {𝓤} ^ₒ β)
+ → EM 𝓤
+𝟚ₒ^ₒ-as-large-as-exponent-implies-EM hyp =
+ 𝟚ₒ^ₒ-as-large-as-exponent-implies-EM' (λ β _ → hyp β)
+
+^ₒ-as-large-as-exponent-implies-EM'
  : ((α β : Ordinal 𝓤) → 𝟙ₒ{𝓤} ⊲ α
                       → has-trichotomous-least-element α
                       → has-trichotomous-least-element β → β ⊴ α ^ₒ β)
  → EM 𝓤
-^ₒ-as-large-as-exponent-implies-EM hyp =
- 𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
+^ₒ-as-large-as-exponent-implies-EM' hyp =
+ 𝟚ₒ^ₒ-as-large-as-exponent-implies-EM'
   (λ β → hyp 𝟚ₒ β (successor-increasing 𝟙ₒ)
                   (decomposable-to-trichotomous-least 𝟚ₒ (𝟙ₒ , refl)))
+
+^ₒ-as-large-as-exponent-implies-EM
+ : ((α β : Ordinal 𝓤) → 𝟙ₒ{𝓤} ⊲ α
+                      → β ⊴ α ^ₒ β)
+ → EM 𝓤
+^ₒ-as-large-as-exponent-implies-EM hyp =
+ ^ₒ-as-large-as-exponent-implies-EM' (λ α β l _ _ → hyp α β l)
 
 \end{code}
 

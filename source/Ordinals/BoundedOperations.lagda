@@ -535,7 +535,7 @@ approximate-logarithm-variation-implies-EM
    → Σ γ ꞉ Ordinal 𝓤 , (γ ⊴ β) × (γ greatest-satisfying (λ - → (α ^ₒ - ⊴ β))))
  → EM 𝓤
 approximate-logarithm-variation-implies-EM {𝓤} hyp =
- ^ₒ-as-large-as-exponent-implies-EM (λ α β h _ _ → I α β h)
+ ^ₒ-as-large-as-exponent-implies-EM (λ α β h → I α β h)
   where
    I : (α β : Ordinal 𝓤) → 𝟙ₒ ⊲ α → β ⊴ α ^ₒ β
    I α β α-strictly-pos = IV

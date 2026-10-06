@@ -761,15 +761,17 @@ Proposition-57-i : ((α β : Ordinal 𝓤) → β ⊴ α +ₒ β) ↔ EM 𝓤
 Proposition-57-i =   +ₒ-as-large-as-right-summand-implies-EM
                    , EM-implies-+ₒ-as-large-as-right-summand
 
-{-
 Proposition-57-i' : ((α β : Ordinal 𝓤) → has-trichotomous-least-element α
                                        → has-trichotomous-least-element β
                                        → β ⊴ α +ₒ β)
                   → EM 𝓤
-Proposition-57-i' = {!!}
--}
+Proposition-57-i' hyp P P-is-prop =
+ decidability
+  (hyp α β (decomposable-to-trichotomous-least α (Pₒ , refl))
+           (decomposable-to-trichotomous-least β (𝟙ₒ , refl)))
+  where
+   open +ₒ-inflationary-counterexample P P-is-prop
 
--- TODO: Add has-trichotomous-least-element α, β?
 Proposition-57-ii : ((α β : Ordinal 𝓤) → 𝟘ₒ ⊲ α → β ⊴ α ×ₒ β) ↔ EM 𝓤
 Proposition-57-ii =  ×ₒ-as-large-as-right-factor-implies-EM
                    , EM-implies-×ₒ-as-large-as-right-factor
@@ -780,18 +782,26 @@ Proposition-57-ii' : ((α β : Ordinal 𝓤) → has-trichotomous-least-element 
                    → EM 𝓤
 Proposition-57-ii' = ×ₒ-as-large-as-right-factor-implies-EM'
 
-Proposition-57-iii
- : ((β : Ordinal 𝓤) → has-trichotomous-least-element β → β ⊴ 𝟚ₒ ^ₒ β) ↔ EM 𝓤
-Proposition-57-iii =   𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
-                     , (λ em β _ → EM-implies-^ₒ-as-large-as-exponent
-                                    em 𝟚ₒ β (successor-increasing 𝟙ₒ))
+Proposition-57-iii : ((β : Ordinal 𝓤) → β ⊴ 𝟚ₒ ^ₒ β) ↔ EM 𝓤
+Proposition-57-iii = 𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
+                     , (λ em β → EM-implies-^ₒ-as-large-as-exponent
+                                  em 𝟚ₒ β (successor-increasing 𝟙ₒ))
+
+Proposition-57-iii'
+ : ((β : Ordinal 𝓤) → has-trichotomous-least-element β → β ⊴ 𝟚ₒ ^ₒ β) → EM 𝓤
+Proposition-57-iii' = 𝟚ₒ^ₒ-as-large-as-exponent-implies-EM'
 
 Proposition-57-iv
+ : ((α β : Ordinal 𝓤) → 𝟙ₒ ⊲ α → β ⊴ α ^ₒ β) ↔ EM 𝓤
+Proposition-57-iv =   ^ₒ-as-large-as-exponent-implies-EM
+                    , EM-implies-^ₒ-as-large-as-exponent
+
+Proposition-57-iv'
  : ((α β : Ordinal 𝓤) → 𝟙ₒ ⊲ α
                       → has-trichotomous-least-element α
-                      → has-trichotomous-least-element β → β ⊴ α ^ₒ β) ↔ EM 𝓤
-Proposition-57-iv =   ^ₒ-as-large-as-exponent-implies-EM
-                    , (λ em α β h _ _ → EM-implies-^ₒ-as-large-as-exponent em α β h)
+                      → has-trichotomous-least-element β → β ⊴ α ^ₒ β)
+ → EM 𝓤
+Proposition-57-iv' =   ^ₒ-as-large-as-exponent-implies-EM'
 
 \end{code}
 
