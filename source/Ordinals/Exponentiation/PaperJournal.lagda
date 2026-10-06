@@ -1,11 +1,14 @@
 Tom de Jong, Nicolai Kraus, Fredrik Nordvall Forsberg and Chuangjie Xu
 September 2025
+Updated October 2026
 
 This file follows the definitions, equations, lemmas, propositions, theorems and
 remarks of our paper
 
    Tom de Jong, Nicolai Kraus, Fredrik Nordvall Forsberg and Chuangjie Xu
    Constructive Ordinal Exponentiation
+   Accepted for publication in the Journal of the ACM
+   https://arxiv.org/abs/2501.14542v6
 
 This paper is a journal version of the paper "Ordinal Exponentiation in Homotopy
 Type Theory", whose definitions etc are listed in Ordinals.Exponentiation.Paper.
