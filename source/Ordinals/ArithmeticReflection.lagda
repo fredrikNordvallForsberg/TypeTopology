@@ -54,7 +54,7 @@ open import Ordinals.Exponentiation.DecreasingList ua pt
 open import Ordinals.Exponentiation.Miscellaneous ua pt sr
 open import Ordinals.Exponentiation.RelatingConstructions ua pt sr
 open import Ordinals.Exponentiation.Supremum ua pt sr
-open import Ordinals.Exponentiation.TrichotomousLeastElement ua pt
+open import Ordinals.Exponentiation.TrichotomousLeastElement ua
 open import Ordinals.Fin
 open import Ordinals.Maps
 open import Ordinals.MultiplicationProperties ua

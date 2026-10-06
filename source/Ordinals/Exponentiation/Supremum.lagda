@@ -710,7 +710,7 @@ Ordinals.Exponentiation.PropertiesViaTransport.
 
 \begin{code}
 
-open import Ordinals.Exponentiation.TrichotomousLeastElement ua pt
+open import Ordinals.Exponentiation.TrichotomousLeastElement ua
 
 ^ₒ-reflects-trichotomous-least-in-base
  : (α β : Ordinal 𝓤) (a₀ : ⟨ α ⟩)

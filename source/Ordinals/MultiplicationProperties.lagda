@@ -37,6 +37,7 @@ open import MLTT.Plus-Properties
 open import Ordinals.AdditionProperties ua
 open import Ordinals.Arithmetic fe
 open import Ordinals.Equivalence
+open import Ordinals.Exponentiation.TrichotomousLeastElement ua
 open import Ordinals.Maps
 open import Ordinals.OrdinalOfOrdinals ua
 open import Ordinals.Propositions ua

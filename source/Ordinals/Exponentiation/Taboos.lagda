@@ -51,7 +51,7 @@ open import Ordinals.Exponentiation.DecreasingList ua pt
 open import Ordinals.Exponentiation.PropertiesViaTransport ua pt sr
 open import Ordinals.Exponentiation.Specification ua pt sr
 open import Ordinals.Exponentiation.Supremum ua pt sr
-open import Ordinals.Exponentiation.TrichotomousLeastElement ua pt
+open import Ordinals.Exponentiation.TrichotomousLeastElement ua
 
 open import UF.Base
 open import UF.ClassicalLogic
@@ -462,7 +462,7 @@ EM-gives-full-exponentiation
  → Σ exp ꞉ (Ordinal 𝓤 → Ordinal 𝓤 → Ordinal 𝓤) , exp-full-specification exp
 EM-gives-full-exponentiation em =
  Has-trichotomous-least-element-or-is-zero-gives-full-exponentiation
-  (EM-gives-Has-trichotomous-least-element-or-is-zero em)
+  (EM-gives-Has-trichotomous-least-element-or-is-zero pt em)
 
 \end{code}
 
