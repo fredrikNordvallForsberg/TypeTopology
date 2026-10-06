@@ -637,7 +637,7 @@ taboo.
 
 Refactored to use a counterexample with a trichotomous least element
 (i.e., of the form `𝟙ₒ +ₒ γ`) by Fredrik Nordvall Forsberg 5 October 2026.
-has-trichotomous-least-element α
+
 \begin{code}
 
 𝟚ₒ^ₒ-as-large-as-exponent-implies-EM
