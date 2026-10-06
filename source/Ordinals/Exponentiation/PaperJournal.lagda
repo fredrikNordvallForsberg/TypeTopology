@@ -757,15 +757,28 @@ Lemma-56 =   order-preserving-gives-≼-implies-EM ∘ H₁
   H₁ = λ h α β (f , f-order-pres) → ⊴-gives-≼ α β (h α β  f   f-order-pres)
   H₂ = λ h α β  f   f-order-pres  → ≼-gives-⊴ α β (h α β (f , f-order-pres))
 
--- TODO: Add has-trichotomous-least-element α, β?
 Proposition-57-i : ((α β : Ordinal 𝓤) → β ⊴ α +ₒ β) ↔ EM 𝓤
 Proposition-57-i =   +ₒ-as-large-as-right-summand-implies-EM
                    , EM-implies-+ₒ-as-large-as-right-summand
+
+{-
+Proposition-57-i' : ((α β : Ordinal 𝓤) → has-trichotomous-least-element α
+                                       → has-trichotomous-least-element β
+                                       → β ⊴ α +ₒ β)
+                  → EM 𝓤
+Proposition-57-i' = {!!}
+-}
 
 -- TODO: Add has-trichotomous-least-element α, β?
 Proposition-57-ii : ((α β : Ordinal 𝓤) → 𝟘ₒ ⊲ α → β ⊴ α ×ₒ β) ↔ EM 𝓤
 Proposition-57-ii =  ×ₒ-as-large-as-right-factor-implies-EM
                    , EM-implies-×ₒ-as-large-as-right-factor
+
+Proposition-57-ii' : ((α β : Ordinal 𝓤) → has-trichotomous-least-element α
+                                        → has-trichotomous-least-element β
+                                        → 𝟘ₒ ⊲ α → β ⊴ α ×ₒ β)
+                   → EM 𝓤
+Proposition-57-ii' = ×ₒ-as-large-as-right-factor-implies-EM'
 
 Proposition-57-iii
  : ((β : Ordinal 𝓤) → has-trichotomous-least-element β → β ⊴ 𝟚ₒ ^ₒ β) ↔ EM 𝓤

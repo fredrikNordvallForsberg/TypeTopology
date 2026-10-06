@@ -1015,17 +1015,26 @@ simulation-product-decomposition-leftover-empty α β γ (a₀ , p) a e = II
 
 Added 15 July 2025 by Tom de Jong.
 
+Updated 6 October 2026 by Tom de Jong to reflect that we can even restrict to
+ordinals with a trichotomous least element.
+
 \begin{code}
 
-×ₒ-as-large-as-right-factor-implies-EM
- : ((α β : Ordinal 𝓤) → 𝟘ₒ ⊲ α → β ⊴ α ×ₒ β) → EM 𝓤
-×ₒ-as-large-as-right-factor-implies-EM  hyp P P-is-prop = IV (f (inr ⋆)) refl
+×ₒ-as-large-as-right-factor-implies-EM'
+ : ((α β : Ordinal 𝓤) → has-trichotomous-least-element α
+                      → has-trichotomous-least-element β
+                      → 𝟘ₒ ⊲ α → β ⊴ α ×ₒ β)
+ → EM 𝓤
+×ₒ-as-large-as-right-factor-implies-EM' hyp P P-is-prop = IV (f (inr ⋆)) refl
  where
   Pₒ = prop-ordinal P P-is-prop
   α = 𝟙ₒ +ₒ Pₒ
   β = 𝟚ₒ
   𝕗 : β ⊴ α ×ₒ β
-  𝕗 = hyp α β (inl ⋆ , (𝟙ₒ-↓ ⁻¹ ∙ +ₒ-↓-left ⋆))
+  𝕗 = hyp α β
+          (decomposable-to-trichotomous-least α (Pₒ , refl))
+          (decomposable-to-trichotomous-least β (𝟙ₒ , refl))
+          (inl ⋆ , (𝟙ₒ-↓ ⁻¹ ∙ +ₒ-↓-left ⋆))
   f = [ β , α ×ₒ β ]⟨ 𝕗 ⟩
   f-is-sim : is-simulation β (α ×ₒ β) f
   f-is-sim = [ β , α ×ₒ β ]⟨ 𝕗 ⟩-is-simulation
@@ -1066,6 +1075,11 @@ Added 15 July 2025 by Tom de Jong.
   IV (inr p , inl ⋆) e = inl p
   IV (inl ⋆ , inr ⋆) e = inr (II (inl ⋆) e)
   IV (inr p , inr ⋆) e = inl p
+
+×ₒ-as-large-as-right-factor-implies-EM
+ : ((α β : Ordinal 𝓤) → 𝟘ₒ ⊲ α → β ⊴ α ×ₒ β) → EM 𝓤
+×ₒ-as-large-as-right-factor-implies-EM  hyp =
+ ×ₒ-as-large-as-right-factor-implies-EM' (λ α β _ _ → hyp α β)
 
 EM-implies-×ₒ-as-large-as-right-factor
  : EM 𝓤
